@@ -6,7 +6,7 @@ import re
 st.set_page_config(page_title="Hometaste Delivery Auto-Allocator", layout="wide")
 
 st.title("📦 Hometaste Delivery Auto-Allocator & Duplicate Checker")
-st.write("Upload your daily Excel delivery sheet. The app will clean duplicates, apply your custom keyword routing rules, respect rider capacity caps, and return your exact original format with updated rider assignments.")
+st.write("Upload your daily Excel delivery sheet. The app will clean duplicates, apply your custom keyword routing rules with precise word-matching, respect rider capacity caps, and return your exact original format.")
 
 # Sidebar configuration for Riders and Caps
 st.sidebar.header("1. Rider Capacity Caps")
@@ -19,23 +19,21 @@ rider_caps = {
     "Azwan": st.sidebar.number_input("Azwan Cap", value=25, min_value=1, max_value=100),
     "Joe": st.sidebar.number_input("Joe Cap", value=22, min_value=1, max_value=100),
     "Kali": st.sidebar.number_input("Kali Cap", value=25, min_value=1, max_value=100),
-    "Inhouse Rider": st.sidebar.number_input("Inhouse Rider Cap", value=25, min_value=1, max_value=100),
     "Hometaste": st.sidebar.number_input("Hometaste Cap", value=25, min_value=1, max_value=100),
 }
 
 st.sidebar.header("2. Area Keyword Routing Rules")
 st.sidebar.write("Map keywords (comma-separated) to specific riders:")
 
-# Default keyword mapping setup
+# Default keyword mapping setup (cleaned to prevent false matches)
 default_rules = {
-    "Shah": "permaisuri, old klang road, bukit damansara, Taman Tun Dr Ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
-    "Arif": "ara damansara, subang jaya, USJ, u1, kota kemuning, ss7",
+    "Shah": "permaisuri, old klang road, bukit damansara, taman tun dr ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
+    "Arif": "ara damansara, subang jaya, usj, kota kemuning, ss7",
     "Fairuz": "ss8, puchong, jalil, sri petaling, kinrara, kembangan",
-    "Azwan": "kepong, desa park city, tropicana, PJU8, PJU9, PJU5, PJU10, 52200, 47810, KIP, 47400, 47300",
-    "Joe": "wangsamaju, jinjang, ipoh, 55000, 52100, setapak, sentul, 53100, 53000, 54200, 53300",
+    "Azwan": "kepong, desa park city, tropicana, pju 8, pju 9, pju 5, pju 10, damansara perdana, damansara damai, 47820, 47830, 52200, 47810, kip, 47400, 47300",
+    "Joe": "wangsa maju, jinjang, ipoh, 55000, 52100, setapak, sentul, 53100, 53000, 54200, 53300",
     "Kali": "klcc, bukit bintang, 55100, 51200, mont kiara, pandan perdana, 55200, 50400",
-    "Inhouse Rider": "sentul, wangsa maju",
-    "Hometaste": "40100, 68000, 40170, 40300, 56000, 56100, 40150, 40200"
+    "Hometaste": "40100, 68000, 40170, 40300, 56000, 56100, 40150, 40200, setia eco park"
 }
 
 keyword_mapping = {}
@@ -50,7 +48,7 @@ if uploaded_file is not None:
         # Read original excel
         df = pd.read_excel(uploaded_file, sheet_name=0)
         
-        # Identify key columns (typically column index 0 for Rider, 1 for Number/ID, 2 for Address)
+        # Identify key columns
         cols = df.columns.tolist()
         rider_col = cols[0]
         address_col = cols[2] if len(cols) > 2 else cols[1]
@@ -64,18 +62,27 @@ if uploaded_file is not None:
             rider_counts = {r: 0 for r in rider_caps.keys()}
             unassigned_rows = []
 
-            # Step 1: Assign based on keywords
+            # Step 1: Assign based on keywords using precise word matching
             for idx, row in df.iterrows():
                 addr_text = str(row[address_col]).lower() if pd.notna(row[address_col]) else ""
                 
                 assigned_rider = None
-                # Check keywords
                 for rider, keywords in keyword_mapping.items():
                     for kw in keywords:
-                        if kw and kw in addr_text:
-                            if rider_counts[rider] < rider_caps[rider]:
-                                assigned_rider = rider
-                                break
+                        if kw:
+                            # Use word boundary check so 'u1' won't match inside 'u13'
+                            # For postcodes/numbers or phrases, check substring or exact boundary
+                            if kw.isdigit() or len(kw) <= 3:
+                                pattern = r'\b' + re.escape(kw) + r'\b'
+                                if re.search(pattern, addr_text):
+                                    if rider_counts[rider] < rider_caps[rider]:
+                                        assigned_rider = rider
+                                        break
+                            else:
+                                if kw in addr_text:
+                                    if rider_counts[rider] < rider_caps[rider]:
+                                        assigned_rider = rider
+                                        break
                     if assigned_rider:
                         break
                 
@@ -89,11 +96,11 @@ if uploaded_file is not None:
             # Step 2: Handle overflow / unassigned with available capacity
             for idx in unassigned_rows:
                 available_rider = max(rider_caps, key=lambda r: rider_caps[r] - rider_counts[r])
-                if rider_counts[available_rider] < rider_caps[available_rider] + 10: 
+                if rider_counts[available_rider] < rider_caps[available_rider] + 15: 
                     rider_counts[available_rider] += 1
                     assignments[idx] = available_rider
                 else:
-                    assignments[idx] = list(rider_caps.keys()[0]) # Fallback
+                    assignments[idx] = list(rider_caps.keys())[0] # Fallback
 
             # Update the original dataframe's Rider column
             df[rider_col] = assignments
