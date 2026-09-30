@@ -30,10 +30,10 @@ default_rules = {
     "Shah": "permaisuri, old klang road, bukit damansara, Taman Tun Dr Ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
     "Arif": "ara damansara, subang jaya, USJ, u1, kota kemuning, ss7",
     "Fairuz": "ss8, puchong, jalil, sri petaling, kinrara, kembangan",
-    "Azwan": "kepong, desa park city, tropicanal, PJU8, PJU9, PJU5, PJU10, 52200, PJU8, 52200, 47810, KIP, 47400, 47300,"
+    "Azwan": "kepong, desa park city, tropicanal, PJU8, PJU9, PJU5, PJU10, 52200, PJU8, 52200, 47810, KIP, 47400, 47300",
     "Joe": "wangsamaju, jinjang, ipoh, 55000, 52100, setapak, sentul, 53100, 53000, 54200, 53300, 55000",
-    "Kali": "klcc, bukit bintang, 55100, 51200, mont kiara, pandan perdana, 51200, 55200, 50400"
-    "inhouse rider": "klcc, bukit bintang, sentul, wangsa maju"
+    "Kali": "klcc, bukit bintang, 55100, 51200, mont kiara, pandan perdana, 51200, 55200, 50400",
+    "inhouse rider": "klcc, bukit bintang, sentul, wangsa maju",
     "Hometaste": "40100, 68000, 40170, 40300, 56000, 56100, 40150, 40200"
 }
 
