@@ -16,10 +16,11 @@ rider_caps = {
     "Arif": st.sidebar.number_input("Arif Cap", value=20, min_value=1, max_value=100),
     "Fairuz": st.sidebar.number_input("Fairuz Cap", value=20, min_value=1, max_value=100),
     "Shah": st.sidebar.number_input("Shah Cap", value=25, min_value=1, max_value=100),
-    "Azwan": st.sidebar.number_input("Lizz Cap", value=25, min_value=1, max_value=100),
+    "Azwan": st.sidebar.number_input("Azwan Cap", value=25, min_value=1, max_value=100),
     "Joe": st.sidebar.number_input("Joe Cap", value=22, min_value=1, max_value=100),
     "Kali": st.sidebar.number_input("Kali Cap", value=25, min_value=1, max_value=100),
-    "Hometaste": st.sidebar.number_input("Kali Cap", value=25, min_value=1, max_value=100),
+    "Inhouse Rider": st.sidebar.number_input("Inhouse Rider Cap", value=25, min_value=1, max_value=100),
+    "Hometaste": st.sidebar.number_input("Hometaste Cap", value=25, min_value=1, max_value=100),
 }
 
 st.sidebar.header("2. Area Keyword Routing Rules")
@@ -30,10 +31,10 @@ default_rules = {
     "Shah": "permaisuri, old klang road, bukit damansara, Taman Tun Dr Ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
     "Arif": "ara damansara, subang jaya, USJ, u1, kota kemuning, ss7",
     "Fairuz": "ss8, puchong, jalil, sri petaling, kinrara, kembangan",
-    "Azwan": "kepong, desa park city, tropicanal, PJU8, PJU9, PJU5, PJU10, 52200, PJU8, 52200, 47810, KIP, 47400, 47300",
-    "Joe": "wangsamaju, jinjang, ipoh, 55000, 52100, setapak, sentul, 53100, 53000, 54200, 53300, 55000",
-    "Kali": "klcc, bukit bintang, 55100, 51200, mont kiara, pandan perdana, 51200, 55200, 50400",
-    "inhouse rider": "klcc, bukit bintang, sentul, wangsa maju",
+    "Azwan": "kepong, desa park city, tropicana, PJU8, PJU9, PJU5, PJU10, 52200, 47810, KIP, 47400, 47300",
+    "Joe": "wangsamaju, jinjang, ipoh, 55000, 52100, setapak, sentul, 53100, 53000, 54200, 53300",
+    "Kali": "klcc, bukit bintang, 55100, 51200, mont kiara, pandan perdana, 55200, 50400",
+    "Inhouse Rider": "sentul, wangsa maju",
     "Hometaste": "40100, 68000, 40170, 40300, 56000, 56100, 40150, 40200"
 }
 
@@ -65,7 +66,6 @@ if uploaded_file is not None:
 
             # Step 1: Assign based on keywords
             for idx, row in df.iterrows():
-                # Skip header rows if any
                 addr_text = str(row[address_col]).lower() if pd.notna(row[address_col]) else ""
                 
                 assigned_rider = None
@@ -88,13 +88,12 @@ if uploaded_file is not None:
 
             # Step 2: Handle overflow / unassigned with available capacity
             for idx in unassigned_rows:
-                # Find rider with most remaining capacity room
                 available_rider = max(rider_caps, key=lambda r: rider_caps[r] - rider_counts[r])
-                if rider_counts[available_rider] < rider_caps[available_rider] + 5: # Allow small overflow buffer if needed
+                if rider_counts[available_rider] < rider_caps[available_rider] + 10: 
                     rider_counts[available_rider] += 1
                     assignments[idx] = available_rider
                 else:
-                    assignments[idx] = list(rider_caps.keys())[0] # Fallback
+                    assignments[idx] = list(rider_caps.keys()[0]) # Fallback
 
             # Update the original dataframe's Rider column
             df[rider_col] = assignments
