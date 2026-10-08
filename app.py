@@ -12,13 +12,13 @@ st.sidebar.header("1. Rider Capacity Caps")
 st.sidebar.write("Set max parcel limit for each rider:")
 
 rider_caps = {
+    "Inhouse Rider": st.sidebar.number_input("Inhouse Rider Cap", value=25, min_value=1, max_value=100),
     "Fairuz": st.sidebar.number_input("Fairuz Cap", value=20, min_value=1, max_value=100),
     "Azwan": st.sidebar.number_input("Azwan Cap", value=25, min_value=1, max_value=100),
     "Shah": st.sidebar.number_input("Shah Cap", value=25, min_value=1, max_value=100),
     "Arif": st.sidebar.number_input("Arif Cap", value=20, min_value=1, max_value=100),
     "Joe": st.sidebar.number_input("Joe Cap", value=22, min_value=1, max_value=100),
     "Kali": st.sidebar.number_input("Kali Cap", value=25, min_value=1, max_value=100),
-    "Inhouse Rider": st.sidebar.number_input("Inhouse Rider Cap", value=25, min_value=1, max_value=100),
     "Hometaste": st.sidebar.number_input("Hometaste Cap", value=25, min_value=1, max_value=100),
     "Lizz": st.sidebar.number_input("Lizz Cap", value=30, min_value=1, max_value=100),
 }
@@ -28,13 +28,13 @@ st.sidebar.write("Map keywords (comma-separated) to specific riders:")
 
 # Exact prioritized default rules
 default_rules = {
-    "Fairuz": "bandar sunway, sunway, ss8, puchong, jalil, sri petaling, kinrara, kembangan, the legacy oug, jalan gembira tmn overseas union",
-    "Azwan": "ss2, pju 3, kepong, desa park city, tropicana, pju 8, pju 9, pju 5, pju 10, damansara perdana, damansara damai, 47820, 47830, 52200, 47810, kip, 47400, 47300",
-    "Shah": "permaisuri, old klang road, bukit damansara, taman tun dr ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
-    "Arif": "u1, ss7, ara damansara, subang jaya, usj, kota kemuning, 47301",
+    "Inhouse Rider": "zenith, kelana mahkota condominium, sentul, wangsa maju",
+    "Fairuz": "lakefields, 57000, 46000, bandar sunway, sunway, ss8, puchong, jalil, sri petaling, kinrara, kembangan, the legacy oug, jalan gembira tmn overseas union",
+    "Azwan": "bandar utama, 47800, sutramas, dutamas, sri hartamas, pju 3, ss2, kepong, desa park city, tropicana, pju 8, pju 9, pju 5, pju 10, damansara perdana, damansara damai, 47820, 47830, 52200, 47810, kip, 47400, 47300",
+    "Shah": "universiti malaya, 50603, permaisuri, old klang road, bukit damansara, taman tun dr ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
+    "Arif": "kemuning utama, 40400, u1, ss7, ara damansara, subang jaya, usj, kota kemuning, 47301",
     "Joe": "wangsa maju, jinjang, ipoh, 55000, 52100, setapak, sentul, 53100, 53000, 54200, 53300",
     "Kali": "pandan indah, mont kiara, chan sow lin, klcc, bukit bintang, 55100, 51200, pandan perdana, 55200, 50400, 50480",
-    "Inhouse Rider": "zenith, kelana mahkota condominium, sentul, wangsa maju",
     "Hometaste": "56000, 40100, 68000, 40170, 40300, 56100, 40150, 40200, setia eco park",
     "Lizz": "lizz rider pick up, lizz"
 }
@@ -81,10 +81,10 @@ if uploaded_file is not None:
                     if rider_counts["Lizz"] < rider_caps["Lizz"]:
                         assigned_rider = "Lizz"
                 else:
-                    # Check other riders in defined dictionary order (Fairuz -> Azwan -> Shah -> Arif -> Joe -> Kali -> Inhouse -> Hometaste)
+                    # Check riders in defined dictionary priority order
                     for rider, keywords in keyword_mapping.items():
                         if rider == "Lizz":
-                            continue # Skip Lizz here
+                            continue
                         for kw in keywords:
                             if kw:
                                 if kw.isdigit() or len(kw) <= 4:
