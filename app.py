@@ -28,14 +28,14 @@ st.sidebar.write("Map keywords (comma-separated) to specific riders:")
 
 # Updated default rules incorporating all v2 specifications
 default_rules = {
-    "Inhouse Rider": "zenith, kelana mahkota condominium",
-    "Azwan": "jalan pju 3, 47810, pju 3, ss2, kepong, desa park city, tropicana, pju 8, pju 9, pju 5, pju 10, damansara perdana, damansara damai, 47820, 47830, 52200, kip, 47400, 47300",
+    "Inhouse Rider": "zenith, kelana mahkota",
+    "Azwan": "jalan pju 3, 47810, pju 3, ss2, kepong, desa park city, tropicana, pju 8, pju 9, pju 5, pju 10, damansara perdana, damansara damai, Bukit Utama, 47820, 47830, 52200, kip, 47400, 47300",
     "Fairuz": "lakefields, 46000, bandar sunway, ss8, puchong, jalil, sri petaling, kinrara, kembangan, oug",
     "Shah": "universiti malaya, 50603, permaisuri, old klang road, bukit damansara, taman tun dr ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
-    "Arif": "kemuning utama, 40400, u1, ss7, ara damansara, subang jaya, usj, kota kemuning, 47301",
-    "Joe": "the capers, lorong timur, sentul selatan, jln sentul pasar, m century, the quartz wm, jalan 34/26, wangsa maju, arte plus, ampang, royal domain, putramas, jln kuching, sentul, 51000, 53300, 55000, 52100, 53100, 53000, 54200, jinjang, ipoh",
-    "Kali": "taman cheras indah, cheras indah, dutamas, duta, sutramas, hartamas, 51200, 56100, 57100, pandan indah, mont kiara, chan sow lin, klcc, bukit bintang, 55100, pandan perdana, 55200, 50400, 50480",
-    "Hometaste": "56000, 40100, 68000, 40170, 40300, 40150, 40200, setia eco park",
+    "Arif": "kemuning utama,serene, 40400, u1, ss7, ara damansara, subang jaya, usj, kota kemuning, 47301",
+    "Joe": "the capers, lorong timur, sentul selatan, Batu Caves,jln sentul pasar, m century, the quartz wm, jalan 34/26, wangsa maju, arte plus, ampang, royal domain, putramas, jln kuching, sentul, 51000, 53300, 55000, 52100, 53100, 53000, 54200, jinjang, ipoh",
+    "Kali": "taman cheras indah, cheras indah, dutamas, kiara, sutramas, hartamas, 51200, 56100, 57100, pandan indah, mont kiara, chan sow lin, klcc, bukit bintang, 55100, pandan perdana, 55200, 50400, 50480",
+    "Hometaste": "56000, 40100, 68000, 40170, 40300, 40150, 40200, alam damai, setia eco park",
     "Lizz": "lizz rider pick up, lizz"
 }
 
