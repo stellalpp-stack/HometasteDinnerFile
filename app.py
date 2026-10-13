@@ -34,7 +34,7 @@ default_rules = {
     "Shah": "universiti malaya, 50603, permaisuri, old klang road, bukit damansara, taman tun dr ismail, taman desa, 58200, seputeh, 58100, 58000, 57100, bangsar, bukit gasing, 50470, 46200, 46050",
     "Arif": "kemuning utama,serene, 40400, u1, ss7, ara damansara, subang jaya, usj, kota kemuning, 47301",
     "Joe": "the capers, setapak, lorong timur, sentul selatan, Batu Caves,jln sentul pasar, m century, the quartz wm, jalan 34/26, wangsa maju, arte plus, ampang, royal domain, putramas, jln kuching, sentul, 51000, 53300, 55000, 52100, 53100, 53000, 54200, jinjang, ipoh",
-    "Kali": "taman cheras indah, cheras indah, dutamas, kiara, sutramas, hartamas, 51200, 56100, 57100, pandan indah, mont kiara, chan sow lin, klcc, bukit bintang, 55100, pandan perdana, 55200, 50400, 50480",
+    "Kali": "cheras indah, dutamas, kiara, sutramas, hartamas, 51200, 57100, pandan indah, mont kiara, chan sow lin, klcc, bukit bintang, 55100, pandan perdana, 55200, 50400, 50480",
     "Hometaste": "56000, 40100, 68000, 40170, 40300, 40150, 40200, alam damai, setia eco park",
     "Lizz": "lizz rider pick up, lizz"
 }
